@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-import { EventBus } from '../rabbitmq/event-bus.js';
-import { Connection } from '../rabbitmq/connection.js';
+import { EventBus } from '../lib/event-bus.js';
+import { Connection } from '../lib/connection.js';
 import assert from 'assert';
 
 class Channel {

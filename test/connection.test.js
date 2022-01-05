@@ -6,7 +6,7 @@ let config;
 let underlyingConnection;
 beforeEach(async () => {
   amqp = await td.replaceEsm('amqplib');
-  const connectionModule = await import('../rabbitmq/connection.js');
+  const connectionModule = await import('../lib/connection.js');
   config = {
     hostname: 'foo',
     port: 1,

@@ -1,5 +1,5 @@
-import { Connection } from './rabbitmq/connection.js';
-import { EventBus } from './rabbitmq/event-bus.js';
+import { Connection } from './lib/connection.js';
+import { EventBus } from './lib/event-bus.js';
 
 /**
  * An object that can log different NPM levels (such as winston).
