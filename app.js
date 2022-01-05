@@ -9,7 +9,7 @@ import { EventBus } from './lib/event-bus.js';
 /**
  * Init the event bus
  * @param {Logger} logger
- * @param {Object} connectionConfig
+ * @param {Object} connectionConfig The config of connection, or a url string as 'amqp://username:password@host:5672'
  * @param {string} connectionConfig.hostname
  * @param {number} connectionConfig.port
  * @param {string} connectionConfig.username
