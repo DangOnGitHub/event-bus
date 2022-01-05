@@ -1,12 +1,13 @@
 import assert from 'assert';
 
+let connectionModule;
 let connection;
 let amqp;
 let config;
 let underlyingConnection;
 beforeEach(async () => {
   amqp = await td.replaceEsm('amqplib');
-  const connectionModule = await import('../lib/connection.js');
+  connectionModule = await import('../lib/connection.js');
   config = {
     hostname: 'foo',
     port: 1,
@@ -56,6 +57,24 @@ describe('connect', () => {
     await assert.doesNotReject(connection.connect());
 
     assert.equal(connection.isConnected(), true);
+  });
+
+  it('retries if failed to connect', async () => {
+    connection = new connectionModule.Connection(logger, config, 1);
+    const firstError = new Error('foo');
+    const secondError = new Error('bar');
+    td.when(amqp.connect(config)).thenReject(firstError, secondError);
+
+    await assert.rejects(connection.connect(), secondError);
+  });
+
+  it('does not retry if out of retry count', async () => {
+    connection = new connectionModule.Connection(logger, config, 0);
+    const firstError = new Error('foo');
+    const secondError = new Error('bar');
+    td.when(amqp.connect(config)).thenReject(firstError, secondError);
+
+    await assert.rejects(connection.connect(), firstError);
   });
 });
 
